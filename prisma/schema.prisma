@@ -22,28 +22,29 @@ model User {
     passwordHash String
 
     sessions Session[]
+    quizs Quiz[]
 
-    createdAt @default (now())
+    createdAt DateTime @default (now())
 
     @@map("users")
 }
 
 
-model Sessison {
+model Session {
     id String @id
-    userId string
+    userId String
     expiresAt DateTime
-    user User @relation(filed: [userId], references:[id], onDelete:Cascade)
+    user User @relation(fields: [userId], references:[id], onDelete:Cascade)
 
-    @@map("quiz")
+    @@map("session")
 }
 
 model Quiz {
     id String @id
     userId String
-    createdAt @default (now())
+    createdAt DateTime @default (now())
 
-    user User @relation(filed: [userId], references:[id], onDelete:Cascade)
+    user User @relation(fields: [userId], references:[id], onDelete:Cascade)
 
     @@map("quiz")
 }
