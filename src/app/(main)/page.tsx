@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -13,7 +14,9 @@ export default function Home() {
         the lost and forgotten concepts, to memorize them more effectively!
       </p>
 
-      <Button variant="secondary">Get a demo </Button>
+      <Link href="/quiz">
+        <Button variant="secondary">Get a demo </Button>
+      </Link>
     </main>
   );
 }

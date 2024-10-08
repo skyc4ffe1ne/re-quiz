@@ -1,22 +1,26 @@
 "use client";
 import Link from "next/link";
 
-import { Menu } from "lucide-react";
+import { Menu, MoonStar, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 
 import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { usePathname } from "next/navigation";
+import { useTheme } from "next-themes";
 
 export default function Navbar() {
   const { user } = useSession();
   console.log(user);
 
   const pathname = usePathname();
+
+  const { setTheme, theme } = useTheme();
 
   return (
     <header className="h-[80px] px-10 flex justify-between items-center bg-secondary">
@@ -29,8 +33,8 @@ export default function Navbar() {
         <span className="font-medium"> Quiz </span>
       </div>
 
-      <Popover>
-        <PopoverTrigger className="flex gap-2 cursor-pointer flex-1 justify-center">
+      <DropdownMenu>
+        <DropdownMenuTrigger className="flex gap-2 cursor-pointer flex-1 justify-center">
           <Menu strokeWidth={1.3} />
           <span>
             {" "}
@@ -38,23 +42,39 @@ export default function Navbar() {
               ? "Home"
               : pathname[1].toUpperCase() + pathname.slice(2)}
           </span>
-        </PopoverTrigger>
-        <PopoverContent>
-          <ul>
-            <li className="hover:bg-secondary">
-              <Link href="/about">About </Link>{" "}
-            </li>
-            <li className="hover:bg-secondary">
-              <Link href="/markdown">Markdown</Link>{" "}
-            </li>
-            <li className="hover:bg-secondary">
-              <Link href="/examples">Examples</Link>{" "}
-            </li>
-          </ul>
-        </PopoverContent>
-      </Popover>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="bg-accent">
+          <Link href="/about">
+            <DropdownMenuItem className="hover:bg-secondary font-medium pl-4 cursor-pointer py-3">
+              About
+            </DropdownMenuItem>
+          </Link>
 
-      <div className="flex-1 text-right">
+          <Link href="/markdown">
+            <DropdownMenuItem className="hover:bg-secondary font-medium pl-4 cursor-pointer py-3">
+              Markdown
+            </DropdownMenuItem>
+          </Link>
+
+          <Link href="/examples">
+            <DropdownMenuItem className="hover:bg-secondary font-medium pl-4 cursor-pointer py-3">
+              Examples
+            </DropdownMenuItem>
+          </Link>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <div className="flex-1 flex justify-end items-center">
+        {theme === "dark" ? (
+          <Button size="sm" variant="ghost" onClick={() => setTheme("light")}>
+            <Sun />
+          </Button>
+        ) : (
+          <Button size="sm" variant="ghost" onClick={() => setTheme("dark")}>
+            <MoonStar />
+          </Button>
+        )}
+
         <Button> Create it now </Button>
       </div>
     </header>

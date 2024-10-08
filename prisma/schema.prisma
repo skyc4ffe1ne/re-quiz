@@ -49,3 +49,16 @@ model Quiz {
     @@map("quiz")
 }
 
+
+model MiniQuiz {
+    id String @id
+    quizId String
+    createdAt DateTime @default(now())
+
+    content String[]
+
+    quiz Quiz @relation(fields:[quizId], references:[id], onDelete:Cascade)
+
+    @@map("miniquiz")
+}
+
