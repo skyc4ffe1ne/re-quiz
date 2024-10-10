@@ -12,6 +12,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 
 export async function signUp(credentials: SignUpValues) {
+  console.log(credentials);
   const { username, password, email } = signUpSchema.parse(credentials);
 
   const checkUsername = await prisma.user.findFirst({

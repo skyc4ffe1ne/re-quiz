@@ -46,19 +46,19 @@ model Quiz {
 
     user User @relation(fields: [userId], references:[id], onDelete:Cascade)
 
+    question Question[]
+
     @@map("quiz")
 }
 
+model Question {
+    id        String     @id
+    quizId    String
+    text      String
+    answers   String     // Questo sarà un array di stringhe serializzato come JSON
+    correctAnswer Int     // Indice della risposta corretta nell'array di risposte
+    quiz      Quiz       @relation(fields: [quizId], references: [id], onDelete: Cascade)
 
-model MiniQuiz {
-    id String @id
-    quizId String
-    createdAt DateTime @default(now())
-
-    content String[]
-
-    quiz Quiz @relation(fields:[quizId], references:[id], onDelete:Cascade)
-
-    @@map("miniquiz")
+    @@map("question")
 }
 

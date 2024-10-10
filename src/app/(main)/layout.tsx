@@ -4,19 +4,19 @@ import Navbar from "@/components/Navbar";
 import { Background } from "@/components/Background";
 
 export default async function RootLayout({
-  children,
+    children,
 }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  const session = await validateRequest();
+    const session = await validateRequest();
 
-  return (
-    <SessionProvider value={session}>
-      <div className="min-h-screen">
-        <Background />
-        <Navbar />
-        <div className="flex justify-center items-center">{children}</div>
-      </div>
-    </SessionProvider>
-  );
+    return (
+        <SessionProvider value={session}>
+            <div className="min-h-screen">
+                <Background />
+                <Navbar />
+                <main className="flex justify-center items-center">{children}</main>
+            </div>
+        </SessionProvider>
+    );
 }
