@@ -46,23 +46,27 @@ export default function MakeQuiz() {
                         answers={answers}
                     />
                 ))}
-                <button type="submit"> test </button>
-            </form>
-            <div className="flex justify-between items-center mt-6">
-                <Button
-                    size="sm"
-                    type="button"
-                    variant="ghost"
-                    className="border border-primary"
-                    onClick={() => handleNewAnswer()}
-                >
-                    <Plus size={16} />
-                </Button>
+                <div className="flex justify-between items-center mt-6">
+                    <Button
+                        size="sm"
+                        type="button"
+                        variant="ghost"
+                        className="border border-primary"
+                        onClick={() => handleNewAnswer()}
+                    >
+                        <Plus size={16} />
+                    </Button>
 
-                <Button size="sm" type="submit" variant="ghost" className="bg-accentbd">
-                    <ArrowRight size={16} />
-                </Button>
-            </div>
+                    <Button
+                        size="sm"
+                        type="submit"
+                        variant="ghost"
+                        className="bg-accentbd"
+                    >
+                        <ArrowRight size={16} />
+                    </Button>
+                </div>
+            </form>
         </div>
     );
 }
