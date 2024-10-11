@@ -56,7 +56,7 @@ model Question {
     quizId    String
     text      String
     answers   String     // Questo sarà un array di stringhe serializzato come JSON
-    correctAnswer Int     // Indice della risposta corretta nell'array di risposte
+    correctAnswer String 
     quiz      Quiz       @relation(fields: [quizId], references: [id], onDelete: Cascade)
 
     @@map("question")

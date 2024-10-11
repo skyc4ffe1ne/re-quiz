@@ -36,4 +36,14 @@ export const questionSchema = z.object({
   answer3: z.string().trim().min(1, "Answers required").optional(),
 });
 
+//export const questionQuizSchema = z.string().trim().min(1, "Question Required");
+//export const correctAnswerSchema = z
+//    .string()
+//    .trim()
+//    .max(1, "Correct Answer Required");
+//export const answerSchema = z
+//    .string()
+//    .trim()
+//    .min(1, "Answers required")
+
 export type questionValues = z.infer<typeof questionSchema>;
