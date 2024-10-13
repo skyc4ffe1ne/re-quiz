@@ -1,67 +1,30 @@
-"use client";
-import { quizSchema, quizValues } from "@/lib/validation";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { createQuiz } from "./action";
-import {
-    Form,
-    FormControl,
-    FormField,
-    FormItem,
-    FormLabel,
-    FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
+"use server";
 
-export default function Page() {
-    const form = useForm<quizValues>({
-        resolver: zodResolver(quizSchema),
-        defaultValues: {
-            quizName: "",
-            description: "",
-        },
-    });
+import Link from "next/link";
+import { getQuiz } from "./action";
 
-    async function onSubmit(values: quizValues) {
-        await createQuiz(values);
-    }
+export default async function Page() {
+  const quizs = await getQuiz();
 
-    return (
-        <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-                <FormField
-                    control={form.control}
-                    name="quizName"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel> Quiz name </FormLabel>
-                            <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
+  return (
+    <div className="w-full border  min-h-screen bg-primary">
+      <header className="w-full bg-secondary my-2">
+        <Link href="/quiz/new"> Create quiz </Link>
+      </header>
 
-                <FormField
-                    control={form.control}
-                    name="description"
-                    render={({ field }) => (
-                        <FormItem>
-                            <FormLabel> Description </FormLabel>
-                            <FormControl>
-                                <Input {...field} />
-                            </FormControl>
-                            <FormMessage />
-                        </FormItem>
-                    )}
-                />
-
-                <Button type="submit" className="w-full">
-                    Create Quiz
-                </Button>
-            </form>
-        </Form>
-    );
+      <div className="flex flex-col gap-5">
+        {quizs.map((quiz) => (
+          <div key={quiz.id} className="border-t">
+            <Link
+              href={`/quiz/${quiz.name}`}
+              className="mb-2 text-lg tracking-tight font-normal text-primary-foreground hover:underline underline-offset-4"
+            >
+              {quiz.name}{" "}
+            </Link>
+            <p className="text-muted-foreground"> {quiz.description} </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
