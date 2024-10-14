@@ -1,8 +1,9 @@
 import { validateRequest } from "@/auth";
 
 import prisma from "@/lib/prisma";
+import { AllQuizValues } from "@/lib/types";
 
-export async function getQuiz() {
+export async function getQuiz(): Promise<AllQuizValues[] | { error: string }> {
   try {
     const { user } = await validateRequest();
 
@@ -17,8 +18,6 @@ export async function getQuiz() {
         },
       },
     });
-
-    console.log(takeQuizs);
 
     if (!takeQuizs) {
       return {
