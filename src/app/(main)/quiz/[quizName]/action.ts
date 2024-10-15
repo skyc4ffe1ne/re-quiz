@@ -8,7 +8,6 @@ import { generateIdFromEntropySize } from "lucia";
 import { questionSchema } from "@/lib/validation";
 
 import { headers } from "next/headers";
-import { revalidatePath } from "next/cache";
 
 export async function createQuestion(questions: FormData) {
   const headersList = headers();
@@ -60,7 +59,7 @@ export async function createQuestion(questions: FormData) {
 
     const filterUndefinedAnswers = answersArr.filter((el) => el !== undefined);
 
-    await prisma.question.create({
+    const newQuestion = await prisma.question.create({
       data: {
         id: questionId,
         quizId: findQuiz.id,
@@ -70,7 +69,12 @@ export async function createQuestion(questions: FormData) {
       },
     });
 
-    return revalidatePath(`/quiz${getNameQuiz}`);
+    const parsedQuestion = {
+      ...newQuestion,
+      answers: JSON.parse(newQuestion.answers),
+    };
+
+    return parsedQuestion;
   } catch (error) {
     console.error(error);
     return {
