@@ -30,6 +30,7 @@ body {
         --accent-foreground: 0 0% 9%;
         --accent-bd: 213 94% 68%;
         --accent-bd-foreground: 0 0% 9%;
+        --accent-bd-h: 210, 100%, 46%;
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 0 0% 98%;
         --border: 0 0% 89.8%;
@@ -42,6 +43,7 @@ body {
         --chart-4: 43 74% 66%;
         --chart-5: 27 87% 67%;
         --radius: 0.5rem;
+
     }
 
     .dark {
@@ -60,7 +62,7 @@ body {
         --accent: 0 0% 14.9%;
         --accent-foreground: 0 0% 98%;
         --accent-bd: 213 94% 68%;
-        --accent-bd-foreground: 0 0% 9%;
+        --accent-bd-foreground: 210, 40%, 98%;
         --destructive: 0 62.8% 30.6%;
         --destructive-foreground: 0 0% 98%;
         --border: 0 0% 14.9%;

@@ -8,71 +8,71 @@ import { login } from "./action";
 import { useState, useTransition } from "react";
 
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
-  const [error, setError] = useState<string>();
-  const [isPending, startTransition] = useTransition();
+    const [error, setError] = useState<string>();
+    const [isPending, startTransition] = useTransition();
 
-  const form = useForm<loginValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      username: "",
-      password: "",
-    },
-  });
-
-  async function onSubmit(values: loginValues) {
-    setError(undefined);
-    startTransition(async () => {
-      const { error } = await login(values);
-      if (error) setError(error);
+    const form = useForm<loginValues>({
+        resolver: zodResolver(loginSchema),
+        defaultValues: {
+            username: "",
+            password: "",
+        },
     });
-  }
 
-  return (
-    <>
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
-          {error && <p className="text-destructive"> {error}</p>}
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Username</FormLabel>
-                <FormControl>
-                  <Input placeholder="username" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Password</FormLabel>
-                <FormControl>
-                  <Input type="password" placeholder="password" {...field} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+    async function onSubmit(values: loginValues) {
+        setError(undefined);
+        startTransition(async () => {
+            const { error } = await login(values);
+            if (error) setError(error);
+        });
+    }
 
-          <Button type="submit"> {isPending ? "Loading" : "Login"} </Button>
-        </form>
-      </Form>
-    </>
-  );
+    return (
+        <>
+            <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)}>
+                    {error && <p className="text-destructive"> {error}</p>}
+                    <FormField
+                        control={form.control}
+                        name="username"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Username</FormLabel>
+                                <FormControl>
+                                    <Input placeholder="username" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+                    <FormField
+                        control={form.control}
+                        name="password"
+                        render={({ field }) => (
+                            <FormItem className="mt-2">
+                                <FormLabel>Password</FormLabel>
+                                <FormControl>
+                                    <Input type="password" placeholder="password" {...field} />
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
+                    <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Login"} </Button>
+                </form>
+            </Form>
+        </>
+    );
 }

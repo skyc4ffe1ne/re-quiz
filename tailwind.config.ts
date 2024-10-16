@@ -39,6 +39,7 @@ const config: Config = {
                 accentbd: {
                     DEFAULT: "hsl(var(--accent-bd))",
                     foreground: "hsl(var(--accent-bd-foreground))",
+                    hover: "hsl(var(--accent-bd-h))",
                 },
                 destructive: {
                     DEFAULT: "hsl(var(--destructive))",

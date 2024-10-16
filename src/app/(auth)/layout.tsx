@@ -4,7 +4,7 @@ export default function layout({
     children: React.ReactNode;
 }>) {
     return (
-        <main className="max-w-6xl flex justify-center items-center">
+        <main className="w-full border flex justify-center items-center min-h-screen">
             {children}
         </main>
     );

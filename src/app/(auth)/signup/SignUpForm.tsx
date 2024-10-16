@@ -60,7 +60,7 @@ export default function SignUpForm() {
                     control={form.control}
                     name="email"
                     render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="mt-2">
                             <FormLabel>Email</FormLabel>
                             <FormControl>
                                 <Input type="email" placeholder="email" {...field} />
@@ -74,7 +74,7 @@ export default function SignUpForm() {
                     control={form.control}
                     name="password"
                     render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="mt-2">
                             <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input type="password" placeholder="password" {...field} />
@@ -84,7 +84,7 @@ export default function SignUpForm() {
                     )}
                 />
 
-                <Button type="submit"> {isPending ? "Loading" : "Sign up"} </Button>
+                <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Sign up"} </Button>
             </form>
         </Form>
     );

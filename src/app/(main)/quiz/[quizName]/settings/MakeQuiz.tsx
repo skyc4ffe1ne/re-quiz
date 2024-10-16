@@ -1,13 +1,12 @@
 "use client";
 
-import { useState } from "react";
-
-import { createQuestion } from "./action";
+import { useTransition, useState } from "react";
 
 const initialAnswers = ["Answer 1", "Answer 2"];
 
-import { Textarea } from "@/components/ui/textarea";
+
 import Answer from "./Answer";
+import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Plus, ArrowRight } from "lucide-react";
 
@@ -17,19 +16,24 @@ export default function MakeQuiz() {
     const [answers, setAnswers] = useState<string[]>(initialAnswers);
     const [error, setError] = useState<string>("");
     function handleNewAnswer() {
-        const checkLenght = answers.length;
-        if (checkLenght <= 4) {
-            setAnswers((a) => (a = [...a, `Answer ${checkLenght + 1}`]));
-        } else {
-            setError("Max 4 answer");
-        }
+        setAnswers((a) => {
+            const updateAnswers = [...a, `Answer ${answers.length + 1}`];
+            console.log(updateAnswers.length)
+            if (updateAnswers.length > 4) {
+                setError("Max 4 answers")
+            }
+            return updateAnswers
+        });
     }
 
-    const mutation = createQuestionMutate();
-    async function onSubmit(values: FormData) {
-        setError("");
 
-        mutation.mutate(values);
+    const mutation = createQuestionMutate();
+
+    async function onSubmit(values: FormData) {
+        if (!error) {
+            setError("");
+            mutation.mutate(values);
+        }
     }
 
     return (
@@ -48,6 +52,7 @@ export default function MakeQuiz() {
                         key={idx}
                         setDeleteAnswer={setAnswers}
                         answers={answers}
+                        setError={setError}
                     />
                 ))}
                 <div className="flex justify-between items-center mt-6">
@@ -55,7 +60,7 @@ export default function MakeQuiz() {
                         size="sm"
                         type="button"
                         variant="ghost"
-                        className="border border-primary"
+                        className="border border-primary hover:bg-accent"
                         onClick={() => handleNewAnswer()}
                     >
                         <Plus size={16} />
@@ -65,7 +70,8 @@ export default function MakeQuiz() {
                         size="sm"
                         type="submit"
                         variant="ghost"
-                        className="bg-accentbd"
+                        disabled={!!error}
+                        className="bg-accentbd hover:bg-accentbd-hover"
                     >
                         <ArrowRight size={16} />
                     </Button>

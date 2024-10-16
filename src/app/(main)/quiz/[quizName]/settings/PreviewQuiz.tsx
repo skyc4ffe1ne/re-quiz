@@ -46,7 +46,7 @@ export default function PreviewQuiz() {
                       <Button
                         variant="outline"
                         key={idx}
-                        className="w-full justify-start mb-2 font-normal text-base"
+                        className="w-full justify-start mb-2 font-normal text-base whitespace-normal h-auto text-left"
                       >
                         {" "}
                         {answer}{" "}

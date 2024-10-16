@@ -1,11 +1,11 @@
-import MakeQuiz from "./MakeQuiz";
-import PreviewQuiz from "./PreviewQuiz";
+import CarouselQuizName from "./CarouselQuizName";
+import HeaderQuizName from "./HeaderQuizName";
 
 export default function Page() {
     return (
-        <div className="w-full py-2 px-4">
-            <MakeQuiz />
-            <PreviewQuiz />
+        <div className="mx-auto max-w-6xl">
+            <HeaderQuizName />
+            <CarouselQuizName />
         </div>
     );
 }
