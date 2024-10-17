@@ -7,6 +7,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { login } from "./action";
 import { useState, useTransition } from "react";
 
+
+import Link from "next/link"
 import {
     Form,
     FormControl,
@@ -41,14 +43,14 @@ export default function LoginForm() {
     return (
         <>
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2">
                     {error && <p className="text-destructive"> {error}</p>}
                     <FormField
                         control={form.control}
                         name="username"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Username</FormLabel>
+                                <FormLabel className="max-w-96">Username</FormLabel>
                                 <FormControl>
                                     <Input placeholder="username" {...field} />
                                 </FormControl>
@@ -60,7 +62,7 @@ export default function LoginForm() {
                         control={form.control}
                         name="password"
                         render={({ field }) => (
-                            <FormItem className="mt-2">
+                            <FormItem className="mt-2 max-w-96">
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
                                     <Input type="password" placeholder="password" {...field} />
@@ -70,7 +72,10 @@ export default function LoginForm() {
                         )}
                     />
 
-                    <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Login"} </Button>
+                    <div className="flex flex-col">
+                        <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Login"} </Button>
+                        <Link href="/signup" className="mt-2 hover:underline underline-offset-2">Don&apos;t have an account ?</Link>
+                    </div>
                 </form>
             </Form>
         </>

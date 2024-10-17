@@ -1,8 +1,12 @@
+import { useFormContext } from "react-hook-form"
+
+
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { QuizAnswer } from "@/components/QuizAnswer";
 
 import { Trash2 } from "lucide-react";
+import { FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 
 type AnswerProps = {
     idx: number;
@@ -31,14 +35,41 @@ export default function Answer({
         );
     }
 
+
+    const { control } = useFormContext()
+
     return (
         <div
             key={idx}
             className="flex items-center gap-4 border border-border_g rounded-lg px-4 py-2 mt-4"
         >
-            <Checkbox className="rounded-full" name="correctAnswer" value={idx} />
-            <QuizAnswer placeholder={answer} name={`answer${idx}`} />
-            <Button size="sm" variant="ghost" onClick={() => handleDeleteAnswer(idx)}>
+            <FormField
+                control={control}
+                name="correctAnswer"
+                render={({ field }) => (
+                    <FormItem className="flex items-center">
+                        <FormControl>
+                            <Checkbox checked={field.value === idx}
+                                onCheckedChange={(checked) => {
+                                    return checked ? field.onChange(idx) : field.onChange(undefined);
+                                }}
+                                className="rounded-full" {...field} />
+                        </FormControl>
+                    </FormItem>
+                )} />
+            <FormField
+                control={control}
+                name={`answer${idx}`}
+                render={({ field }) => (
+                    <FormItem className="w-full">
+                        <FormControl>
+                            <QuizAnswer placeholder={answer} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                    </FormItem>
+
+                )} />
+            <Button size="sm" type="button" variant="ghost" onClick={() => handleDeleteAnswer(idx)}>
                 <Trash2 size={16} />
             </Button>
         </div>

@@ -1,4 +1,6 @@
 "use client";
+
+import Link from "next/link"
 import { useForm } from "react-hook-form";
 import { signUpSchema, SignUpValues } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -40,13 +42,13 @@ export default function SignUpForm() {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2">
                 {error && <p className="text-destructive"> {error}</p>}
                 <FormField
                     control={form.control}
                     name="username"
                     render={({ field }) => (
-                        <FormItem>
+                        <FormItem className="max-w-96">
                             <FormLabel>Username</FormLabel>
                             <FormControl>
                                 <Input placeholder="username" {...field} />
@@ -60,7 +62,7 @@ export default function SignUpForm() {
                     control={form.control}
                     name="email"
                     render={({ field }) => (
-                        <FormItem className="mt-2">
+                        <FormItem className="mt-2 max-w-96">
                             <FormLabel>Email</FormLabel>
                             <FormControl>
                                 <Input type="email" placeholder="email" {...field} />
@@ -74,7 +76,7 @@ export default function SignUpForm() {
                     control={form.control}
                     name="password"
                     render={({ field }) => (
-                        <FormItem className="mt-2">
+                        <FormItem className="mt-2 max-w-96">
                             <FormLabel>Password</FormLabel>
                             <FormControl>
                                 <Input type="password" placeholder="password" {...field} />
@@ -84,7 +86,10 @@ export default function SignUpForm() {
                     )}
                 />
 
-                <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Sign up"} </Button>
+                <div className="flex flex-col">
+                    <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Sign up"} </Button>
+                    <Link href="/login" className="mt-2 hover:underline underline-offset-2"> Arleady have an account ? </Link>
+                </div>
             </form>
         </Form>
     );

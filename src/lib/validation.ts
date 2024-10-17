@@ -29,13 +29,16 @@ export type loginValues = z.infer<typeof loginSchema>;
 
 export const questionSchema = z.object({
     questionQuiz: z.string().trim().min(1, "Question required"),
-    correctAnswer: z.string().max(1, "Correct Answer required"),
+    correctAnswer: z.number().max(3, "Correct Answer required"),
     answer0: z.string().trim().min(1, "Answers required"),
     answer1: z.string().trim().min(1, "Answers required"),
-    answer2: z.string().trim().min(1, "Answers required").optional(),
-    answer3: z.string().trim().min(1, "Answers required").optional(),
+    answer2: z.string().trim().min(1, "Answer required").optional().or(z.literal('')),
+    answer3: z.string().trim().min(1, "Answer required").optional().or(z.literal('')),
 });
 
+
+//answer2: z.string().trim().min(1, "Answer required").optional().or(z.literal('')),
+//
 export type questionValues = z.infer<typeof questionSchema>;
 
 export const quizSchema = z.object({

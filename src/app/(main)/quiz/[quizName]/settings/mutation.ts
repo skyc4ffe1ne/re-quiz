@@ -1,21 +1,21 @@
-import { useToast } from "@/hooks/use-toast"
-
-
 import {
     useMutation,
     QueryFilters,
     useQueryClient,
 } from "@tanstack/react-query";
 import { createQuestion } from "./action";
+import { useToast } from "@/hooks/use-toast";
 
 export function createQuestionMutate() {
-    const toast = useToast()
     const queryClient = useQueryClient();
+
+
+    const { toast } = useToast()
+
 
     const mutation = useMutation({
         mutationFn: createQuestion,
         onSuccess: async (newQuestion) => {
-            console.log("newQuestion", newQuestion)
             const queryFilter: QueryFilters = { queryKey: ["quiz-preview"] };
 
             await queryClient.cancelQueries(queryFilter);
@@ -31,13 +31,18 @@ export function createQuestionMutate() {
                     return !query.state.data;
                 },
             });
+
+            toast({
+                title: "Quiz Created successfully!"
+            })
         },
 
         onError(error) {
             console.error(error);
             toast({
                 variant: "destructive",
-                description: "Failed to create, please try again"
+                title: "Something went wrong!",
+                description: "There was a problem with ur request."
             })
         },
     });

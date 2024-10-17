@@ -5,35 +5,22 @@ import prisma from "@/lib/prisma";
 import { validateRequest } from "@/auth";
 import { generateIdFromEntropySize } from "lucia";
 
-import { questionSchema } from "@/lib/validation";
+import { questionSchema, questionValues } from "@/lib/validation";
 
 import { headers } from "next/headers";
 
-export async function createQuestion(questions: FormData) {
+export async function createQuestion(questions: questionValues) {
     const headersList = headers();
     const referer = headersList.get("referer");
 
     if (!referer) throw new Error("Create ur own quiz");
 
-    const getNameQuiz = referer.match(/(?<=\/quiz\/)[^\/]+/);
-
-    if (!getNameQuiz) throw new Error("Something went wrong");
-
     try {
-        const { error, ...other } = questionSchema.safeParse({
-            questionQuiz: questions.get("questionQuiz"),
-            correctAnswer: questions.get("correctAnswer"),
-            answer0: questions.get("answer0"),
-            answer1: questions.get("answer1"),
-            answer2: questions.get("answer2") ?? undefined,
-            answer3: questions.get("answer3") ?? undefined,
-        });
+        const getNameQuiz = referer.match(/(?<=\/quiz\/)[^\/]+/);
 
+        if (!getNameQuiz) throw new Error("Something went wrong");
 
-        if (error) {
-            console.error(error);
-            throw new Error("validation failed");
-        }
+        const { questionQuiz, correctAnswer, ...other } = questionSchema.parse(questions)
 
         const { user } = await validateRequest();
 
@@ -52,10 +39,10 @@ export async function createQuestion(questions: FormData) {
         const questionId = generateIdFromEntropySize(10);
 
         const answersArr = [
-            other.data?.answer0,
-            other.data?.answer1,
-            other.data?.answer2,
-            other.data?.answer3,
+            other.answer0,
+            other.answer1,
+            other.answer2,
+            other.answer3,
         ];
 
         const filterUndefinedAnswers = answersArr.filter((el) => el !== undefined);
@@ -64,9 +51,9 @@ export async function createQuestion(questions: FormData) {
             data: {
                 id: questionId,
                 quizId: findQuiz.id,
-                text: other.data.questionQuiz,
+                text: questionQuiz,
                 answers: JSON.stringify(filterUndefinedAnswers),
-                correctAnswer: other.data.correctAnswer,
+                correctAnswer: correctAnswer,
             },
         });
 
