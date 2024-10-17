@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import { usePathname } from "next/navigation";
 
-import { getQuestions } from "./service";
+import { getQuestions, getQuestionsSetting } from "./service";
 import { PreviewQuizValues } from "@/lib/types";
 
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,7 @@ export default function PreviewQuiz() {
 
     const { data, isPending, status } = useQuery({
         queryKey: ["quiz-preview"],
-        queryFn: () => getQuestions(pathname),
+        queryFn: () => getQuestionsSetting(pathname),
     });
 
     if (isPending) return <SkeletonPreviewQuiz />;
