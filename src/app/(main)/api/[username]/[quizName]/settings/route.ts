@@ -5,22 +5,24 @@ import { validateRequest } from "@/auth";
 
 export async function GET(req: NextRequest) {
     try {
-
         const { user } = await validateRequest();
         if (!user) throw new Error("Unauthorized");
 
-
         const pathName = req.nextUrl.pathname;
-        const getQuizName = pathName.match(/(?<=quiz\/).+/);
+        const getQuizName = pathName.match(/api\/[^\/]+\/([^\/]+)/);
 
-        if (!getQuizName) throw new Error("Something went wrong")
+        if (!getQuizName?.length) throw new Error("Can't get quiz name")
 
         const getQuiz = await prisma.quiz.findFirst({
             where: {
                 name: {
-                    equals: getQuizName[0],
+                    equals: getQuizName[1],
                 },
             },
+            select: {
+                id: true,
+                userId: true
+            }
         });
 
         if (!getQuiz) {
@@ -29,6 +31,9 @@ export async function GET(req: NextRequest) {
             }
         }
 
+        if (getQuiz.userId !== user.id) throw new Error("Unauthorized");
+
+
         const getQuestions = await prisma.question.findMany({
             where: {
                 quizId: {
@@ -36,7 +41,6 @@ export async function GET(req: NextRequest) {
                 },
             },
         });
-
         const parsedQuestions = getQuestions.map((question) => ({
             ...question,
             answers: JSON.parse(question.answers),

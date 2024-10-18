@@ -1,4 +1,3 @@
-
 import { NextRequest, NextResponse } from "next/server";
 
 import prisma from "@/lib/prisma";
@@ -11,34 +10,26 @@ export async function GET(req: NextRequest) {
         if (!user) throw new Error("Unauthorized");
 
 
-        const pathName = req.nextUrl.pathname;
+        const pathname = req.nextUrl.pathname;
 
 
-        const getQuizName = pathName.match(/(?<=\/quiz\/)[^\/]+/);
+        const getQuizName = pathname.match(/\/api\/[^\/]+\/([^\/]+)/)
 
+        if (!getQuizName) throw new Error("Can't get quiz name")
 
         const getQuiz = await prisma.quiz.findFirst({
             where: {
                 name: {
-                    equals: getQuizName[0],
+                    equals: getQuizName[1],
                 },
             },
-            select: {
-                id: true,
-                userId: true
-            }
         });
-
-
 
         if (!getQuiz) {
             return {
                 error: "Quiz doesn't exist"
             }
         }
-
-        if (getQuiz.userId !== user.id) throw new Error("Unauthorized");
-
 
         const getQuestions = await prisma.question.findMany({
             where: {
@@ -47,6 +38,7 @@ export async function GET(req: NextRequest) {
                 },
             },
         });
+
         const parsedQuestions = getQuestions.map((question) => ({
             ...question,
             answers: JSON.parse(question.answers),

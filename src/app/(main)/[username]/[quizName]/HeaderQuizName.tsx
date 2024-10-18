@@ -7,15 +7,14 @@ import { Button } from "@/components/ui/button";
 
 
 export default function HeaderQuizName() {
-
-
     const pathname = usePathname();
-    const nameQuiz = pathname.match(/(?<=\/quiz\/)[^\/]+/)
+    const nameQuiz = pathname.match(/(?<=[a-zA-Z0-9\-_]\/).+/)
+
     return (
         <div className="pt-8 flex justify-between items-center">
             <div>
                 <h3 className="text-2xl  sm:text-2xl font-bold tracking-tight">
-                    {nameQuiz[0] ? nameQuiz[0] : "Title "}
+                    {nameQuiz?.length ? nameQuiz[0] : "Title "}
                 </h3>
             </div>
 

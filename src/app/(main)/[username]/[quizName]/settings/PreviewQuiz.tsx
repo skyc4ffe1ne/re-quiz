@@ -1,4 +1,11 @@
-"use client"
+"use client";
+import { useQuery } from "@tanstack/react-query";
+
+import { usePathname } from "next/navigation";
+
+import { getQuestionsSetting } from "./service";
+import { PreviewQuizValues } from "@/lib/types";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
@@ -8,31 +15,27 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
+import SkeletonPreviewQuiz from "./SkeletonPreviewQuiz";
+import EmptyPreviewQuiz from "./EmptyPreviewQuiz";
 
-import { useQuery } from "@tanstack/react-query";
-
-import { usePathname } from "next/navigation";
-import { getQuestions } from "./settings/service";
-import { PreviewQuizValues } from "@/lib/types";
-
-import SkeletonPreviewQuiz from "./settings/SkeletonPreviewQuiz";
-
-export default function CarouselQuizName() {
-
+export default function PreviewQuiz() {
     const pathname = usePathname();
 
     const { data, isPending, status } = useQuery({
         queryKey: ["quiz-preview"],
-        queryFn: () => getQuestions(pathname),
+        queryFn: () => getQuestionsSetting(pathname),
     });
 
+    console.log(data)
 
-    if (isPending) return <SkeletonPreviewQuiz />
-
+    if (isPending) return <SkeletonPreviewQuiz />;
+    if (status === "success" && !data.length) return <EmptyPreviewQuiz />;
 
     return (
-
-        <div className="flex w-full items-center justify-center mt-10">
+        <div className="mx-auto radius-xl px-4 mt-10 w-1/2">
+            <h3 className="text-lg tracking-tight text-primary mb-3">
+                Preview quiz
+            </h3>
             <Carousel className="w-5/6 mx-auto">
                 <CarouselContent>
                     {data.map((el: PreviewQuizValues) => (
@@ -45,21 +48,20 @@ export default function CarouselQuizName() {
                                             <Button
                                                 variant="outline"
                                                 key={idx}
-                                                className="w-full justify-start mb-2 font-normal text-base"
+                                                className="w-full justify-start mb-2 font-normal text-base whitespace-normal h-auto text-left"
                                             >
-                                                {" "}
-                                                {answer}{" "}
+                                                {answer}
                                             </Button>
                                         ))}
                                     </CardContent>
                                 </Card>
                             </div>
                         </CarouselItem>
-                    ))}  </CarouselContent>
+                    ))}
+                </CarouselContent>
                 <CarouselPrevious />
                 <CarouselNext />
             </Carousel>
         </div>
-
-    )
+    );
 }

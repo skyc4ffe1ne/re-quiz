@@ -31,13 +31,14 @@ model Session {
 
 model Quiz {
   id          String     @id
-  name        String     @unique
+  name        String
   description String
   userId      String
   createdAt   DateTime   @default(now())
   question    Question[]
   user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
 
+  @@unique([userId, name])
   @@map("quiz")
 }
 

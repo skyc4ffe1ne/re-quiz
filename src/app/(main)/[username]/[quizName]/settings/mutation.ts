@@ -9,9 +9,7 @@ import { useToast } from "@/hooks/use-toast";
 export function createQuestionMutate() {
     const queryClient = useQueryClient();
 
-
     const { toast } = useToast()
-
 
     const mutation = useMutation({
         mutationFn: createQuestion,

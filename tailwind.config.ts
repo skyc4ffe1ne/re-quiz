@@ -41,6 +41,9 @@ const config: Config = {
                     foreground: "hsl(var(--accent-bd-foreground))",
                     hover: "hsl(var(--accent-bd-h))",
                 },
+                hovernav: {
+                    DEFAULT: "hsl(var(--nav-h))",
+                },
                 destructive: {
                     DEFAULT: "hsl(var(--destructive))",
                     foreground: "hsl(var(--destructive-foreground))",

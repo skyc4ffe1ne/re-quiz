@@ -10,7 +10,7 @@ export default function Home() {
             <p className="text-muted-foreground mt-6 mb-12 max-w-3xl mx-auto tracking-wide">
                 How many times we read something interesting we try to memorize it, but
                 then we end up forgetting it. We help you
-                <span className="text-sky-400">create your own quiz</span> for all the
+                <span className="text-sky-400"> create your own quiz</span> for all the
                 lost and forgotten concepts, to memorize them more effectively!
             </p>
             <Link href="/quiz">

@@ -16,9 +16,10 @@ export async function createQuestion(questions: questionValues) {
     if (!referer) throw new Error("Create ur own quiz");
 
     try {
-        const getNameQuiz = referer.match(/(?<=\/quiz\/)[^\/]+/);
+        const getNameQuiz = referer.match(/[^\/]+(?=\/settings)/);
 
-        if (!getNameQuiz) throw new Error("Something went wrong");
+
+        if (!getNameQuiz) throw new Error("Can't get quiz name");
 
         const { questionQuiz, correctAnswer, ...other } = questionSchema.parse(questions)
 
