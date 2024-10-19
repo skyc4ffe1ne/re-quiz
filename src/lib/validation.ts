@@ -42,7 +42,7 @@ export const questionSchema = z.object({
 export type questionValues = z.infer<typeof questionSchema>;
 
 export const quizSchema = z.object({
-    quizName: z.string().trim().min(1, "Name fore quiz required"),
+    quizName: z.string().trim().min(1, "Name for quiz required").regex(/^[A-Za-z0-9\-_]+$/, "Only alphanumeric - and  _ allowed"),
     description: z.string().trim().min(1, "Description required"),
 });
 

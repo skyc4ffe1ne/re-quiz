@@ -42,6 +42,7 @@ export async function GET(req: NextRequest) {
         const parsedQuestions = getQuestions.map((question) => ({
             ...question,
             answers: JSON.parse(question.answers),
+            author: getQuiz.userId
         }));
 
         return NextResponse.json(parsedQuestions);

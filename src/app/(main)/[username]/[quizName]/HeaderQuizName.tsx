@@ -6,7 +6,7 @@ import { Heart, Pencil, SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 
-export default function HeaderQuizName() {
+export default function HeaderQuizName({ checkAuthor }: boolean) {
     const pathname = usePathname();
     const nameQuiz = pathname.match(/(?<=[a-zA-Z0-9\-_]\/).+/)
 
@@ -20,17 +20,21 @@ export default function HeaderQuizName() {
 
             <nav>
                 <ul className="flex gap-2">
-                    <li>
-                        <Link href={
-                            `${pathname}/settings`
-                        }>
-                            <Button asChild variant="outline" className="gap-2">
-                                <div>
-                                    <Pencil size={16} /> Edit
-                                </div>
-                            </Button>
-                        </Link>
-                    </li>
+
+                    {checkAuthor && (
+                        <li>
+                            <Link href={
+                                `${pathname}/settings`
+                            }>
+                                <Button asChild variant="outline" className="gap-2">
+                                    <div>
+                                        <Pencil size={16} /> Edit
+                                    </div>
+                                </Button>
+                            </Link>
+                        </li>
+
+                    )}
                     <li>
                         <Link href={`${pathname}/settings`}>
                             <Button asChild variant="outline" className="gap-2">

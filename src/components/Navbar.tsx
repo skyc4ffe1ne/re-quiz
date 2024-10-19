@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { Monitor, MoonStar, Sun } from "lucide-react";
+import { LogIn, LogOut, Monitor, MoonStar, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 
 import {
@@ -11,11 +11,15 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { useTheme } from "next-themes";
+import { logout } from "@/app/(auth)/action";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function Navbar() {
     const { user } = useSession();
 
-    const { setTheme } = useTheme();
+    const { setTheme, theme } = useTheme();
+
+    const queryClient = useQueryClient()
 
     return (
         <header className="h-[80px] px-10 flex justify-between items-center">
@@ -31,7 +35,7 @@ export default function Navbar() {
                 <nav className="pr-4 border-r">
                     <ul className="flex gap-4">
                         <li>
-                            {user ? (
+                            {user && (
                                 <Link
                                     className="font-semibold leading-6 text-sm hover:text-hovernav"
                                     href={
@@ -40,8 +44,6 @@ export default function Navbar() {
                                             query: { tab: 'quiz' },
                                         }
                                     }> Quiz </Link>
-                            ) : (
-                                <Link href="/signup"> Sign up </Link>
                             )}
 
                         </li>
@@ -57,35 +59,49 @@ export default function Navbar() {
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                         <Button variant="ghost" size="icon">
-                            <Sun className="h-[1.1rem] w-[1.1rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
-                            <MoonStar className="absolute h-[1.1rem] w-[1.1rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+                            <Sun className="h-[1.1rem] w-[1.1rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0 stroke-accentbd" />
+                            <MoonStar className="absolute h-[1.1rem] w-[1.1rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100 stroke-accentbd" />
                             <span className="sr-only">Toggle theme</span>
                         </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                            className="cursor-pointer font-medium py-1 text-sm"
+                            className={`cursor-pointer font-medium py-1 text-sm ${theme === "light" ? "bg-accent" : ""}`}
                             onClick={() => setTheme("light")}
                         >
-                            <Sun strokeWidth={2} className="mr-2" />
+                            <Sun strokeWidth={2} className={`mr-2 ${theme === "light" ? "stroke-accentbd" : ""}`} />
                             Light
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            className="cursor-pointer font-medium py-1 text-sm"
+                            className={`cursor-pointer font-medium py-1 text-sm ${theme === "dark" ? "bg-accent" : ""}`}
                             onClick={() => setTheme("dark")}
                         >
-                            <MoonStar strokeWidth={2} className="mr-2" />
+                            <MoonStar strokeWidth={2} className={`mr-2 ${theme === "dark" ? "stroke-accentbd" : ""}`} />
                             Dark
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            className="cursor-pointer font-medium py-1 text-sm"
+                            className={`cursor-pointer font-medium py-1 text-sm ${theme === "system" ? "bg-accent" : ""}`}
                             onClick={() => setTheme("system")}
                         >
-                            <Monitor strokeWidth={2} className="mr-2" />
+                            <Monitor strokeWidth={2} className={`mr-2 ${theme === "system" ? "stroke-accentbd" : ""}`} />
                             System
                         </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
+
+                {user ? (
+                    <Button size="icon" variant="ghost" onClick={() => {
+                        queryClient.clear()
+                        logout()
+                    }}>
+                        <LogOut className="w-[1.1rem] h-[1.1rem] stroke-muted-foreground hover:stroke-primary" />
+                    </Button>
+                ) : (
+                    <Link
+                        href="/signup">
+                        <LogIn className="w-[1.1rem] h-[1.1rem] hover:stroke-muted-foreground stroke-primary" />
+                    </Link>
+                )}
             </div>
         </header>
     );

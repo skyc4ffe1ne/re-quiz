@@ -4,64 +4,75 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { createQuiz } from "./action";
 import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { useState, useTransition } from "react";
+import { LoaderCircle } from "lucide-react";
 
 export default function Page() {
-  const form = useForm<quizValues>({
-    resolver: zodResolver(quizSchema),
-    defaultValues: {
-      quizName: "",
-      description: "",
-    },
-  });
+    const [isPending, startTransition] = useTransition()
+    const [error, setError] = useState<string>()
 
-  async function onSubmit(values: quizValues) {
-    await createQuiz(values);
-  }
+    const form = useForm<quizValues>({
+        resolver: zodResolver(quizSchema),
+        defaultValues: {
+            quizName: "",
+            description: "",
+        },
+    });
 
-  return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
-        <FormField
-          control={form.control}
-          name="quizName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel> Quiz name </FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
+    async function onSubmit(values: quizValues) {
+        startTransition(async () => {
+            const { error } = await createQuiz(values)
+            if (error) setError(error)
+        })
+    }
 
-        <FormField
-          control={form.control}
-          name="description"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel> Description </FormLabel>
-              <FormControl>
-                <Input {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
 
-        <Button type="submit" className="w-full">
-          Create Quiz
-        </Button>
-      </form>
-    </Form>
-  );
+    if (isPending) return <LoaderCircle size={48} className="animate-spin" />
+    return (
+        <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-3">
+                {error && <p className="text-destructive"> {error} </p>}
+                <FormField
+                    control={form.control}
+                    name="quizName"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel> Quiz name </FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                        <FormItem>
+                            <FormLabel> Description </FormLabel>
+                            <FormControl>
+                                <Input {...field} />
+                            </FormControl>
+                            <FormMessage />
+                        </FormItem>
+                    )}
+                />
+
+                <Button type="submit" className="w-full">
+                    Create Quiz
+                </Button>
+            </form>
+        </Form>
+    );
 }

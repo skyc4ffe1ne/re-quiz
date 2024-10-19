@@ -2,7 +2,8 @@ import { Background } from "@/components/Background";
 import HeaderSignUp from "./HeaderSignUp";
 import SignUpForm from "./SignUpForm";
 
-export default function page() {
+export default async function Page() {
+
     return (
         <div className="flex w-full h-screen items-center">
 

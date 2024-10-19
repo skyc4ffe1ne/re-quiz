@@ -2,7 +2,7 @@ import LoginForm from "./LoginForm"
 import HeaderLogin from "./HeaderLogin"
 import { Background } from "@/components/Background";
 
-export default function page() {
+export default function Page() {
     return (
         <div className="flex w-full h-screen items-center">
 

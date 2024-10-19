@@ -26,7 +26,6 @@ export default function PreviewQuiz() {
         queryFn: () => getQuestionsSetting(pathname),
     });
 
-    console.log(data)
 
     if (isPending) return <SkeletonPreviewQuiz />;
     if (status === "success" && !data.length) return <EmptyPreviewQuiz />;

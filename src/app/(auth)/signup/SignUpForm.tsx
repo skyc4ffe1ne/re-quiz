@@ -18,6 +18,7 @@ import { Button } from "@/components/ui/button";
 
 import { signUp } from "./action";
 import { useState, useTransition } from "react";
+import { LoaderCircle } from "lucide-react";
 
 export default function SignUpForm() {
     const [error, setError] = useState<string>();
@@ -40,10 +41,11 @@ export default function SignUpForm() {
         });
     }
 
+
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="w-1/2">
-                {error && <p className="text-destructive"> {error}</p>}
+            <form onSubmit={form.handleSubmit(onSubmit)} className={`w-1/2 ${error ? "mt-5" : "mt-10"}`}>
+                {error && <p className="text-destructive mb-5"> {error}</p>}
                 <FormField
                     control={form.control}
                     name="username"
@@ -87,8 +89,14 @@ export default function SignUpForm() {
                 />
 
                 <div className="flex flex-col">
-                    <Button type="submit" className="mt-4"> {isPending ? "Loading" : "Sign up"} </Button>
+                    <Button type="submit" className="mt-4">
+                        Sign up
+                        {
+                            isPending && <LoaderCircle size={32} className="animate-spin ml-2" />
+                        }
+                    </Button>
                     <Link href="/login" className="mt-2 hover:underline underline-offset-2"> Arleady have an account ? </Link>
+
                 </div>
             </form>
         </Form>

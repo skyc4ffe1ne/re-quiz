@@ -1,6 +1,6 @@
 export default function HeaderSignUp() {
     return (
-        <header className="mb-10 w-1/2">
+        <header className="w-1/2">
             <h2 className="leading-6 font-semibold mb-2 text-accentbd text-sm">
                 Start for free
             </h2>
