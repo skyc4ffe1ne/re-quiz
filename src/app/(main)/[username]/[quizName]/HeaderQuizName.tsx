@@ -6,7 +6,10 @@ import { Heart, Pencil, SquareArrowOutUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 
-export default function HeaderQuizName({ checkAuthor }: boolean) {
+type HeaderQuizNameProps = {
+    checkAuthor: boolean
+}
+export default function HeaderQuizName({ checkAuthor }: HeaderQuizNameProps) {
     const pathname = usePathname();
     const nameQuiz = pathname.match(/(?<=[a-zA-Z0-9\-_]\/).+/)
 

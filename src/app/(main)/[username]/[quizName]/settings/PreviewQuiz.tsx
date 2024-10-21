@@ -15,8 +15,9 @@ import {
     CarouselNext,
     CarouselPrevious,
 } from "@/components/ui/carousel";
-import SkeletonPreviewQuiz from "./SkeletonPreviewQuiz";
 import EmptyPreviewQuiz from "./EmptyPreviewQuiz";
+import SkeletonQuiz from "@/components/SkeletonQuiz";
+
 
 export default function PreviewQuiz() {
     const pathname = usePathname();
@@ -27,7 +28,7 @@ export default function PreviewQuiz() {
     });
 
 
-    if (isPending) return <SkeletonPreviewQuiz />;
+    if (isPending) return <SkeletonQuiz type="small" />;
     if (status === "success" && !data.length) return <EmptyPreviewQuiz />;
 
     return (

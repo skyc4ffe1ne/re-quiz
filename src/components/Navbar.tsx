@@ -1,5 +1,5 @@
 "use client";
-import Link from "next/link";
+import Image from "next/image";
 import { LogIn, LogOut, Monitor, MoonStar, Sun } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -9,10 +9,14 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
+
+import Link from "next/link";
 import { useSession } from "@/app/(main)/SessionProvider";
 import { useTheme } from "next-themes";
 import { logout } from "@/app/(auth)/action";
 import { useQueryClient } from "@tanstack/react-query";
+import logo from "@/public/reQuizLogo.svg"
 
 export default function Navbar() {
     const { user } = useSession();
@@ -25,7 +29,17 @@ export default function Navbar() {
         <header className="h-[80px] px-10 flex justify-between items-center">
 
             <div className="flex items-center justify-start gap-2 flex-1">
-                <div className="mr-2 w-8 h-8 rounded-full  bg-gradient-to-tr from-sky-300 via-sky-400 to-blue-500 cursor-pointer"></div>
+                <Link href="/" className="pr-2 border-r">
+                    <Image
+                        src={logo}
+                        width="32"
+                        height="32"
+                        quality={100}
+                        alt="logo re-quiz"
+                        className="invert mix-blend-difference"
+                    />
+                </Link>
+                <div className="ml-2 mr-2 w-8 h-8 rounded-full  bg-gradient-to-tr from-sky-300 via-sky-400 to-blue-500 cursor-pointer"></div>
                 <Link href="/user">
                     <span className="font-medium"> {user ? user.username : "guest"}</span>
                 </Link>
@@ -90,16 +104,16 @@ export default function Navbar() {
                 </DropdownMenu>
 
                 {user ? (
-                    <Button size="icon" variant="ghost" onClick={() => {
+                    <Button size="icon" variant="ghost" className="group" onClick={() => {
                         queryClient.clear()
                         logout()
                     }}>
-                        <LogOut className="w-[1.1rem] h-[1.1rem] stroke-muted-foreground hover:stroke-primary" />
+                        <LogOut className="w-[1.1rem] h-[1.1rem] stroke-muted-foreground group-hover:stroke-primary" />
                     </Button>
                 ) : (
                     <Link
                         href="/signup">
-                        <LogIn className="w-[1.1rem] h-[1.1rem] hover:stroke-muted-foreground stroke-primary" />
+                        <LogIn className="w-[1.1rem] h-[1.1rem] stroke-muted-foreground group-hover:stroke-primary" />
                     </Link>
                 )}
             </div>
