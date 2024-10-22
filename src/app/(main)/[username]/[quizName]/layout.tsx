@@ -1,7 +1,13 @@
+import { QuizProvider } from "./QuizProvider";
+
 export default function layout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    return <div className="w-full">{children}</div>;
+    return (
+        <QuizProvider>
+            <div className="w-full">{children}</div>
+        </QuizProvider>
+    )
 }

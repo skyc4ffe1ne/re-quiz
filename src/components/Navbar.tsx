@@ -80,21 +80,21 @@ export default function Navbar() {
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
                         <DropdownMenuItem
-                            className={`cursor-pointer font-medium py-1 text-sm ${theme === "light" ? "bg-accent" : ""}`}
+                            className={`cursor-pointer font-medium text-sm ${theme === "light" ? "bg-accent" : ""}`}
                             onClick={() => setTheme("light")}
                         >
                             <Sun strokeWidth={2} className={`mr-2 ${theme === "light" ? "stroke-accentbd" : ""}`} />
                             Light
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            className={`cursor-pointer font-medium py-1 text-sm ${theme === "dark" ? "bg-accent" : ""}`}
+                            className={`cursor-pointer font-medium my-1 text-sm ${theme === "dark" ? "bg-accent" : ""}`}
                             onClick={() => setTheme("dark")}
                         >
                             <MoonStar strokeWidth={2} className={`mr-2 ${theme === "dark" ? "stroke-accentbd" : ""}`} />
                             Dark
                         </DropdownMenuItem>
                         <DropdownMenuItem
-                            className={`cursor-pointer font-medium py-1 text-sm ${theme === "system" ? "bg-accent" : ""}`}
+                            className={`cursor-pointer font-medium text-sm ${theme === "system" ? "bg-accent" : ""}`}
                             onClick={() => setTheme("system")}
                         >
                             <Monitor strokeWidth={2} className={`mr-2 ${theme === "system" ? "stroke-accentbd" : ""}`} />

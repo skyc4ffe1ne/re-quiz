@@ -8,9 +8,12 @@ import QuizsAll from "./QuizsAll";
 import QuizEmpty from "./QuizEmpty";
 import QuizSidebar from "./QuizSidebar";
 
-export default async function Page({ searchParams }: {
-    searchParams: { [key: string]: string | string[] | undefined }
-}) {
+export default async function Page(
+    props: {
+        searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+    }
+) {
+    const searchParams = await props.searchParams;
     const quizs = await getQuiz();
 
     const { user } = await validateRequest()

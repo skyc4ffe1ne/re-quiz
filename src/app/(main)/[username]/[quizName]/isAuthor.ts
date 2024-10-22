@@ -6,15 +6,17 @@ export async function isAuthor(params: { username: string, quizName: string }) {
 
     if (!user) return false
 
-    const takeQuiz = await prisma.quiz.findFirst({
+    if (user.username !== params.username) return false
+
+    const quiz = await prisma.quiz.findFirst({
         where: {
-            name: {
-                equals: params.quizName
-            }
+            user: {
+                username: params.username
+            },
+            name: params.quizName
         }
     })
 
-    if (!takeQuiz) return false
 
-    return takeQuiz.userId === user.id
+    return !!quiz
 }

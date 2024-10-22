@@ -19,6 +19,7 @@ export function createQuestionMutate() {
             await queryClient.cancelQueries(queryFilter);
 
             queryClient.setQueriesData(queryFilter, (oldData) => {
+                if (!oldData) return [newQuestion]
                 const newData = [newQuestion, ...oldData];
                 return newData;
             });

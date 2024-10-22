@@ -89,7 +89,7 @@ export default function SignUpForm() {
                 />
 
                 <div className="flex flex-col">
-                    <Button type="submit" className="mt-4">
+                    <Button type="submit" className="mt-4 max-w-96">
                         Sign up
                         {
                             isPending && <LoaderCircle size={32} className="animate-spin ml-2" />

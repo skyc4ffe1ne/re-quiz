@@ -1,8 +1,10 @@
 import { isAuthor } from "./isAuthor";
+
+
 import CarouselQuizName from "./CarouselQuizName";
 import HeaderQuizName from "./HeaderQuizName";
-
-export default async function Page({ params }: { params: { username: string, quizName: string } }) {
+export default async function Page(props: { params: Promise<{ username: string, quizName: string }> }) {
+    const params = await props.params;
 
     const checkAuthor = await isAuthor(params)
 

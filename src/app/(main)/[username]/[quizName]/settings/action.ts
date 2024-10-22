@@ -10,7 +10,7 @@ import { questionSchema, questionValues } from "@/lib/validation";
 import { headers } from "next/headers";
 
 export async function createQuestion(questions: questionValues) {
-    const headersList = headers();
+    const headersList = await headers();
     const referer = headersList.get("referer");
 
     if (!referer) throw new Error("Create ur own quiz");

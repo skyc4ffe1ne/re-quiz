@@ -1,6 +1,6 @@
 export type PreviewQuizValues = {
     id: string;
-    correctAnswer: string;
+    correctAnswer: number;
     quizId: string;
     text: string;
     answers: string[];

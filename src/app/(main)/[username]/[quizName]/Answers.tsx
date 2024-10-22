@@ -1,17 +1,20 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Check } from "lucide-react";
+import { useQuiz } from "./QuizProvider";
 
 
 type AnswersProps = {
     id: string;
     answer: string;
     idx: number;
-    dispatch: React.Dispatch<any>;
-    state: { selectedAnswers: { [id: string]: number } }
+    correctAnswer: number
 }
 
-export default function Answers({ id, answer, idx, dispatch, state }: AnswersProps) {
+export default function Answers({ id, answer, idx, correctAnswer }: AnswersProps) {
 
+    const { dispatch, state } = useQuiz()
 
     const isMarked = state?.selectedAnswers[id] === idx
     return (
@@ -25,6 +28,7 @@ export default function Answers({ id, answer, idx, dispatch, state }: AnswersPro
                         payload: {
                             idx,
                             id,
+                            correctAnswer,
                         }
                     }
                 )

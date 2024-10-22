@@ -51,8 +51,8 @@ export default function LoginForm() {
                         control={form.control}
                         name="username"
                         render={({ field }) => (
-                            <FormItem>
-                                <FormLabel className="max-w-96">Username</FormLabel>
+                            <FormItem className="max-w-96">
+                                <FormLabel>Username</FormLabel>
                                 <FormControl>
                                     <Input placeholder="username" {...field} />
                                 </FormControl>
@@ -75,7 +75,7 @@ export default function LoginForm() {
                     />
 
                     <div className="flex flex-col">
-                        <Button type="submit" className="mt-4"> Login
+                        <Button type="submit" className="mt-4 max-w-96"> Login
                             {isPending && <LoaderCircle size={32} className="animate-spin" />}
                         </Button>
                         <Link href="/signup" className="mt-2 hover:underline underline-offset-2">Don&apos;t have an account ?</Link>

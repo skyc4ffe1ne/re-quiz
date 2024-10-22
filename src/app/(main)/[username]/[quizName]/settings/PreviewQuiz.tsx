@@ -29,7 +29,7 @@ export default function PreviewQuiz() {
 
 
     if (isPending) return <SkeletonQuiz type="small" />;
-    if (status === "success" && !data.length) return <EmptyPreviewQuiz />;
+    if (status === "success" && !data.length || data === undefined) return <EmptyPreviewQuiz />;
 
     return (
         <div className="mx-auto radius-xl px-4 mt-10 w-1/2">
