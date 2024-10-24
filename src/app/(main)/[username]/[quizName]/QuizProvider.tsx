@@ -74,6 +74,7 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
                 correctAnswersId: []
             }
 
+
             for (let i = 0; i < state.answers.length; i++) {
                 if (state.answers[i].answerChoosed === state.answers[i].correctAnswer) {
                     finalScore.correctAnswers = correct++
@@ -108,8 +109,9 @@ function reducer(state: typeof initialState, action: ACTIONTYPE) {
                     if (el.id === state.quizScore.correctAnswersId[i]) {
                         return undefined;
                     }
-                    return { ...el, selectedAnswer: state.selectedAnswers[el.id] ?? null }
                 }
+
+                return { ...el, selectedAnswer: state.selectedAnswers[el.id] ?? null }
             }).filter((el) => el !== undefined)
 
             return {
@@ -133,7 +135,6 @@ export function QuizProvider({ children }: Readonly<{
 
     const [state, dispatch] = useReducer(reducer, initialState)
 
-    console.log(state)
 
     return (
         <QuizContext.Provider value={{

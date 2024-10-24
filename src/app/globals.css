@@ -18,6 +18,8 @@ body {
         --foreground: 0 0% 3.9%;
         --card: 0 0% 100%;
         --card-foreground: 0 0% 3.9%;
+        --card-review-border: 0, 0%, 71%;
+        --card-review: 0, 0%, 96%;
         --popover: 0 0% 100%;
         --popover-foreground: 0 0% 3.9%;
         --primary: 0 0% 9%;
@@ -52,6 +54,8 @@ body {
         --foreground: 0 0% 98%;
         --card: 0 0% 3.9%;
         --card-foreground: 0 0% 98%;
+        --card-review: 0, 0%, 6%;
+        --card-review-border: 0, 0%, 29%;
         --popover: 0 0% 3.9%;
         --popover-foreground: 0 0% 98%;
         --primary: 0 0% 98%;
@@ -87,4 +91,37 @@ body {
     body {
         @apply bg-background text-foreground;
     }
+}
+
+.easing {
+    animation: fadeInOut 3s cubic-bezier(0.47, 0, 0.745, 0.715) infinite;
+    /* Each element will take 3 seconds to complete one fade in and fade out cycle. */
+}
+
+/* The element starts fully visible, fades out by the halfway point (50%), and then fades back in by the end of the animation (100%) */
+@keyframes fadeInOut {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0;
+        /* At the middle of the animation (50%), the element becomes fully invisible with opacity: 0 */
+    }
+}
+
+#circle {
+    animation-delay: 0s;
+}
+
+#shape {
+    animation-delay: 1s;
+    /* The #shape starts its animation 1 second after the #circle (animation-delay: 1s). */
+}
+
+#text {
+    animation-delay: 2s;
+    /* The #text starts its animation 2 seconds after the #circle and 1 second after the #shape (animation-delay: 2s). */
 }

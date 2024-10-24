@@ -9,7 +9,7 @@ export default async function QuizSidebar({ searchParams }: { searchParams: { [k
     const { tab } = searchParams
 
     return (
-        <nav className="px-10 border-r pt-8 h-screen">
+        <nav className="px-10 border-r pt-8 min-h-screen">
 
 
             <ul className="flex flex-col gap-4">

@@ -16,6 +16,12 @@ const config: Config = {
                     DEFAULT: "hsl(var(--card))",
                     foreground: "hsl(var(--card-foreground))",
                 },
+                cardReview: {
+                    DEFAULT: "hsl(var(--card-review))"
+                },
+                cardReviewBorder: {
+                    DEFAULT: "hsl(var(--card-review-border))"
+                },
                 popover: {
                     DEFAULT: "hsl(var(--popover))",
                     foreground: "hsl(var(--popover-foreground))",

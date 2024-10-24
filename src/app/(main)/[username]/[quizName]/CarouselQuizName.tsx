@@ -21,22 +21,20 @@ import { useQuiz } from "./QuizProvider";
 import Link from "next/link";
 
 export default function CarouselQuizName() {
+    const { dispatch } = useQuiz();
 
+    const pathname = usePathname();
 
-    const { dispatch } = useQuiz()
-
-    const pathname = usePathname()
-
-    const { data, isPending } = useQuery({
+    const { data, isPending, isFetching } = useQuery({
         queryKey: ["quiz-preview"],
         queryFn: () => getQuestions(pathname),
     });
 
-    if (isPending) return <SkeletonQuiz type="big" />;
-
+    //  if (isPending) return <SkeletonQuiz type="big" />;
+    if (isFetching) return <SkeletonQuiz type="big" />
 
     return (
-        <div className="mt-10 flex w-full items-center justify-center flex-col">
+        <div className="mt-10 flex w-full flex-col items-center justify-center">
             <Carousel className="mx-auto w-5/6">
                 <CarouselContent>
                     {data.map((el: PreviewQuizValues) => (
@@ -64,25 +62,24 @@ export default function CarouselQuizName() {
                 <CarouselNext />
             </Carousel>
 
-
-            <Link href={
-                `${pathname}/end`
-            }>
-                <Button className="mt-20" onClick={() => {
-                    dispatch(
-                        {
+            <Link href={`${pathname}/end`}>
+                <Button
+                    className="mt-20"
+                    onClick={() => {
+                        dispatch({
                             type: "finish",
                             status: "end",
                             payload: {
                                 questionLength: data.length,
-                                originalQuestions: data
-                            }
-                        }
-                    )
-                }
-                }> Submit </Button>
+                                originalQuestions: data,
+                            },
+                        });
+                    }}
+                >
+                    {" "}
+                    Submit{" "}
+                </Button>
             </Link>
-
         </div>
     );
 }

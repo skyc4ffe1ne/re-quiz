@@ -18,6 +18,7 @@ import { logout } from "@/app/(auth)/action";
 import { useQueryClient } from "@tanstack/react-query";
 import logo from "@/public/reQuizLogo.svg"
 
+
 export default function Navbar() {
     const { user } = useSession();
 

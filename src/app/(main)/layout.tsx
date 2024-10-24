@@ -13,7 +13,7 @@ export default async function RootLayout({
     return (
         <SessionProvider value={session}>
             <div className="min-h-screen">
-                <Background />
+                {/*<Background /> */}
                 <Navbar />
                 <main className="flex justify-center items-center">{children}</main>
             </div>
